@@ -1,0 +1,29 @@
+package dev.scx.http.routing.x.cors.allow_headers;
+
+import dev.scx.http.headers.ScxHttpHeaderName;
+
+import static dev.scx.http.routing.x.cors.allow_headers.ReflectAllowHeaders.REFLECT_ALLOW_HEADERS;
+import static dev.scx.http.routing.x.cors.allow_headers.WildcardAllowHeaders.WILDCARD_ALLOW_HEADERS;
+
+/// AllowHeaders
+///
+/// @author scx567888
+public interface AllowHeaders {
+
+    static ListAllowHeaders of(ScxHttpHeaderName... headerNames) {
+        return new ListAllowHeaders(headerNames);
+    }
+
+    static ReflectAllowHeaders ofReflect() {
+        return REFLECT_ALLOW_HEADERS;
+    }
+
+    static WildcardAllowHeaders ofWildcard() {
+        return WILDCARD_ALLOW_HEADERS;
+    }
+
+    /// 输入可为 null, 表示没有 "Access-Control-Request-Headers" 头
+    /// 返回值可为 null, 表示没有 "Access-Control-Allow-Headers" 头
+    String allowedHeaders(String requestHeadersString);
+
+}
