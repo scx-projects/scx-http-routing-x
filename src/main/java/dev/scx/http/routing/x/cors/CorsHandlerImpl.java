@@ -75,7 +75,7 @@ final class CorsHandlerImpl implements CorsHandler {
     @Override
     public CorsHandlerImpl maxAgeSeconds(Long maxAgeSeconds) {
         if (maxAgeSeconds != null && maxAgeSeconds < 0) {
-            throw new IllegalArgumentException("maxAgeSeconds must >= 0");
+            throw new IllegalArgumentException("maxAgeSeconds must be >= 0");
         }
         this.maxAgeSeconds = maxAgeSeconds;
         return this;
@@ -88,7 +88,7 @@ final class CorsHandlerImpl implements CorsHandler {
 
         var origin = request.getHeader(ORIGIN);
 
-        // 1, 校验是否是 cors 请求.
+        // 1, 校验是否是 CORS 请求.
         if (origin == null) {
             // 不是 CORS 请求 - 什么都不做 直接 next
             context.next();
@@ -122,7 +122,7 @@ final class CorsHandlerImpl implements CorsHandler {
 
             // 这里 allowedMethods 永不为 null
             // 因为 ListAllowMethods 和 WildcardAllowMethods 都不会返回 null
-            // 而 ReflcetAllowMethods 只有在 requestMethod == null 时才会返回 null
+            // 而 ReflectAllowMethods 只有在 requestMethod == null 时才会返回 null
             // 但是我们的分支判断已经杜绝了这种可能性.
             var allowedMethods = this.allowMethods.allowedMethods(requestMethod);
             response.setHeader(ACCESS_CONTROL_ALLOW_METHODS, allowedMethods);
