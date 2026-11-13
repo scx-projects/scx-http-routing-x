@@ -39,7 +39,7 @@ public class StaticServerTest {
         // 标准静态服务器模式
         router.route("/*", StaticFilesHandler.of(Path.of("XXXX")));
 
-        // spa 模式
+        // SPA 模式
         router.route("/*", SingleFileHandler.of(Path.of("XXX.html")));
 
     }
