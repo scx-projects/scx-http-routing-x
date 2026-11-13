@@ -7,6 +7,7 @@ import dev.scx.http.uri.ScxURI;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -32,7 +33,7 @@ public final class StaticFilesHandlerImpl implements StaticFilesHandler {
     }
 
     /// 将捕获转换为 相对路径
-    private static Path restToRelativePath(String rest) {
+    private static Path restToRelativePath(String rest) throws IllegalStateException, NotFoundException {
         if (rest == null) {
             // 没有 "*" 捕获 (模板未使用通配符), 视为错误
             throw new IllegalStateException("StaticFilesHandler requires wildcard capture '*'");
@@ -42,7 +43,12 @@ public final class StaticFilesHandlerImpl implements StaticFilesHandler {
         while (i < rest.length() && rest.charAt(i) == '/') {
             i = i + 1;
         }
-        return Path.of(rest.substring(i));
+        try {
+            return Path.of(rest.substring(i));
+        } catch (InvalidPathException e) {
+            // 用户提交的非法文件路径, 直接 404
+            throw new NotFoundException();
+        }
     }
 
     /// 如果返回 null, 表示 没有对应的文件.
