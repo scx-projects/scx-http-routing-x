@@ -27,7 +27,7 @@ public final class SingleFileHandlerImpl implements SingleFileHandler {
         this.file = file.toAbsolutePath().normalize();
     }
 
-    /// 如果 返回 null 表示 没有对应的文件.
+    /// 如果返回 null, 表示 没有对应的文件.
     private static ResolveResult resolveFile(Path target) {
         // 1, 读取文件信息
         BasicFileAttributes attr;

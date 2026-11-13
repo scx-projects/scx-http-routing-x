@@ -45,7 +45,7 @@ public final class StaticFilesHandlerImpl implements StaticFilesHandler {
         return Path.of(rest.substring(i));
     }
 
-    /// 如果 返回 null 表示 没有对应的文件.
+    /// 如果返回 null, 表示 没有对应的文件.
     private static ResolveResult resolveFile(Path target, String rest) {
         // 1, 读取文件信息
         BasicFileAttributes attr;
